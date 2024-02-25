@@ -7,7 +7,7 @@ Created on Mon Dec  20 14:51:27 2023
 
 ### ### ### ###
 
-### Der Code hat drei Zentrale funktionen (vgl. main funktion): 
+### Der Code hat drei Zentrale Funktinalitäten: 
 # 1. Der Code installiert (einzeln) lokal die beiden Modelle (dazu def install_model(): anpassen und huggingface account erstellen/API erstellen) 
 # Falls als Bedingug beide Modelle heruntergeladen wurden, kann der Code,
 # 2. das "envirmental-claims" Modell aufrufen (aus .csv) und alle Umweltaussagen klassifizieren/abspeichern (als .csv)
@@ -68,8 +68,8 @@ def vague_sentence_detection():
         model_vague = AutoModelForSequenceClassification .from_pretrained(model_name_vague)
 
         #https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline -> infos zur pipeline Funktion
-        global pipeline
-        pipeline = pipeline("text-classification", model = model_vague, tokenizer = tokenizer_vague)
+        global pipeline_p
+        pipeline_p = pipeline("text-classification", model = model_vague, tokenizer = tokenizer_vague)
         
         print("Modell zur erkennung von Wagnis geoeffnet")
 
@@ -88,8 +88,8 @@ def green_sentence_detection():
         model_green = AutoModelForSequenceClassification .from_pretrained(model_name_green)
 
         #https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline -> infos zur pipeline Funktion
-        global pipeline
-        pipeline = pipeline("text-classification", model = model_green, tokenizer = tokenizer_green)
+        global pipeline_p
+        pipeline_p = pipeline("text-classification", model = model_green, tokenizer = tokenizer_green)
     
         print("Modell zur erkennung von gruenen Saetzen geoeffnet")
 
@@ -100,46 +100,52 @@ def produce_csv_with_green_or_vague_sentences(report_savefile,result_green,text_
     
     csvDatei=open(report_savefile,"w",encoding='utf-8')
     csvDatei.write("label, label_text, text"+"\n")
-    
-    # CSV-Datei wird mit den gruenen Saetzen (array greensentences) befuellt
+
+    # CSV-Datei wird mit den gruenen/vagen Saetzen befuellt
     for r in range(len(result_green)):
         if "no" in str(result_green[r]):
             csvDatei.write("0"+";"+"no"+";"+str(text_array[r]+"\n"))
+
         else:
             csvDatei.write("1"+";"+"yes"+";"+str(text_array[r]+"\n"))
+
     csvDatei.close()
     
     
 def main ():
-    # Welche Funktion soll ausgefuehrt werden (1/2/3 Eingeben) -> im Fall von 1.die Funktion def install model(): entsprechend der Beschreibung anpassen
-    Auswahl = 2
+    # ANPASSEN: Welche Funktion soll ausgefuehrt werden (1/2/3 Eingeben) -> im Fall von 1.die Funktion def install model(): entsprechend der Beschreibung anpassen
+    Auswahl = 5
     
     if Auswahl == 1:
         install_model()
         sys.exit()
     if Auswahl == 2: 
-        print("2")
-        vague_sentence_detection()
-    if Auswahl == 3: 
         green_sentence_detection()
+    if Auswahl == 3: 
+        vague_sentence_detection()
         
     # hier angeben wo der zu verarbeitende (wagnis erkennen/Umweltaussagen erkennen) Nachhaltigkeitsbericht gespeichert ist (Format = .csv)
-    report_source = r"C:\Users\Jakob\Documents\AA Bachelorarbeit Datein\Nachhaltigkeitsberichte\2.Alle gruenen Saetze/Verizon_Nachhaltigkeitsbericht_2022.csv"    
- 
-    # hier angeben wo die Datei (CSV-Format) gespeicht werden soll, in welcher die Saetze klassifiziert(vage/Umwelaussage)sind
-    report_savefile = r"C:\Users\Jakob\Documents\AA Bachelorarbeit Datein\Nachhaltigkeitsberichte\2.Alle gruenen Saetze/Vage_Verizon_2022.csv"
+    report_source = r"C:\Users\Jakob\Documents\AA Bachelorarbeit Datein\Nachhaltigkeitsberichte\2.Alle gruenen Saetze\Verizon_Nachhaltigkeitsbericht_2022.csv"    
+    
+    # hier angeben wo die Datei (CSV-Format) gespeicht werden soll, in welcher die Saetze klassifiziert (vage/Umweltaussage)sind
+    report_savefile = r"C:\Users\Jakob\Documents\AA Bachelorarbeit Datein\Nachhaltigkeitsberichte\2.Alle gruenen Saetze\Vage_Verizon_2022.csv"
     
     text = pd.read_csv(report_source, header=None, delimiter=';',encoding='utf-8')
-    
+
     # fuellt einen array mit alles Saetzen aus der Csv-Datei
     text_array = []
     r = 0
     while r < len(text) and text.iloc[r, 0]:  # Solange text.iloc[r, 0] nicht leer ist
         text_array.append(text.iloc[r, 0])
         r += 1
-    
-    result_green = [pipeline(row, truncation=True, max_length=512) for row in text_array]
+    try:
+        result_green = [pipeline_p(row, truncation=True, max_length=512) for row in text_array]
+    except:
+        print("Die Auswahl muss angepasst werden in Zeile 117")
+        sys.exit()
+
     produce_csv_with_green_or_vague_sentences(report_savefile,result_green,text_array)
+
 
 if __name__ == "__main__":
     main()
