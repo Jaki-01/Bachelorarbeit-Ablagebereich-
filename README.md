@@ -1,4 +1,4 @@
-#Bachelorarbeit-Ablagebereich
+# Bachelorarbeit-Ablagebereich
 
 Dieses Repository dient als Ablagesystem und enthält alle relevanten Daten und Codes im Zusammenhang mit der Bachelorarbeit.
 
