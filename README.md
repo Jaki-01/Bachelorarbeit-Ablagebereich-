@@ -16,4 +16,4 @@ Voraussetzung für Schritt 3: Es muss eine CSV-Datei vorhanden sein, die in Spal
 
 Schritt 3: Die Umweltaussagen werden daraufhin untersucht, ob sie vage formuliert sind, durch den Code "Hugging Face Modelle für lokale Anwendung.py" in seiner dritten Funktion. Das Ergebnis wird in einer CSV-Datei abgespeichert.
 
-Zusammenfassung: Das Ergebnis aller Codebausteine ist, dass alle Sätze aus einem Nachhaltigkeitsbericht herausgefiltert wurden, die eine "Umweltaussage" darstellen und "vage" formuliert sind. Ein hoher Anteil dieser Sätze im Verhältnis zu den Umweltaussagen könnte darauf hindeuten, dass Greenwashing stattfindet. Mögliche Evidenz könnte in fortführenden wissenschaftlichen Arbeiten untersucht werden. 
+Zusammenfassung: Das Ergebnis aller Codebausteine ist, dass alle Sätze aus einem Nachhaltigkeitsbericht herausgefiltert wurden, die eine "Umweltaussage" darstellen und "vage" formuliert sind. Ein hoher Anteil dieser Sätze im Verhältnis zu den Umweltaussagen könnte darauf hindeuten, dass Greenwashing stattfindet. Mögliche Evidenz hierzu könnten in folgenden Arbeiten untersucht werden.
