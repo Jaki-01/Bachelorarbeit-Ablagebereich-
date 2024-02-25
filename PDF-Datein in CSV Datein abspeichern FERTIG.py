@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Dez 09 15:05:45 2023
+Created on Mon Dez 11 15:05:45 2023
 
 @author: Jakob
 """
 
 ### ### ### ###
 
-### Nutzen des Code: 
-# Nachhaltigkeitsberichte (Pdf-Format) werden aufgerufen und alle ganzen Sätze werden extrahiert. 
-# Diese ganzen Sätze werden für jeden Nachhaltigkeitsbericht in einer eigenen csv Datei abgespeichert. 
+### Nutzen des Codes: 
+# Nachhaltigkeitsberichte (Pdf-Format) werden aufgerufen und alle ganzen Saetze werden extrahiert. 
+# Diese ganzen Saetze werden für jeden Nachhaltigkeitsbericht in einer eigenen csv Datei abgespeichert. 
 
 ### ### ### ### 
 
@@ -73,17 +73,17 @@ def produce_csv_file(save_path, processed_text):
 def main():      
        
     # Gib hier an welche Berichte aufgerufen werden und fuer welche Jahre (luecken zulaessig)
-    firm = ["Alibaba", "Apple", "Aviva", "Biontech", "CleverlandCliffs", "CNRail", "ExxonMobil", "Ford", "GoldmanSachs", "KraftHeinz", "Linde", "Meta", "NVIDIA", "Qualys", "Verizon"]
-    year = ["2023","2022","2021"]
+    firm = ["Firma_xy","Firma_yz"]
+    year = ["2000","2002","2003"]
     
     for firm_name in firm: 
         for year_date in year:
             try:
                 # Pfad bei bedarf anpassen -> hier angeben wo die Nachhaltigkeitsberichte im Pdf Format gespeichert wurden im Format [Firmenname_Nachhaltigkeitsbericht_Jahr]
-                source_path = r"C:\Users\Jakob\Documents\AA Bachelorarbeit Datein\Nachhaltigkeitsberichte\0.Orginal Nachhaltigkeitsberichte in Pdf/"+str(firm_name)+"_Nachhaltigkeitsbericht_"+str(year_date)+".pdf"
+                source_path = r"User/"+str(firm_name)+"_Nachhaltigkeitsbericht_"+str(year_date)+".pdf"
                 
-                # Pfad bei bedarf anpassen -> hier wird csv-Datei mit alle gruenen Saetzen abgespeichert 
-                save_path = r"C:\Users\Jakob\Documents\AA Bachelorarbeit Datein\Nachhaltigkeitsberichte\1.Alle ganzen Saetze Nachhaltigkeitsberichte/"+str(firm_name)+"_Nachhaltigkeitsbericht_"+str(year_date)+".csv"
+                # Pfad bei bedarf anpassen -> hier werden die csv-Datein mit allen ganzen Saetzen abgespeichert 
+                save_path = r"User/"+str(firm_name)+"_Nachhaltigkeitsbericht_"+str(year_date)+".csv"
                 
                 text = read_through_pdf(source_path) # funktioniert
                 processed_text = process_report(text)
