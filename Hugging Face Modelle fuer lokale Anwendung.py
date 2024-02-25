@@ -29,10 +29,10 @@ def install_model():
     from transformers.pipelines.pt_utils import KeyDataset
     from huggingface_hub import hf_hub_download
 
-    hugging_face_ipe =  os.environ.get('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') # hier deine huggingface IPE eintragen (https://huggingface.co/)
+    hugging_face_ipe =  os.environ.get('HIER HUGGING FACE IPE') # hier deine huggingface IPE eintragen (https://huggingface.co/)
 
     model_id = 'Jaki01/vagueness-detection-large' # Pfad anpassen, je nachdem welches Modell man downloaden moechte: Jaki01/vagueness-detection-large (zur Wagnis Erkennung); climatebert/environmental_claims (Erkennung Umweltaussagen)
-    filenames = [ # gib hier die Filenamen an welche auf Huggingface unter "files and versions" angegeben ist
+    filenames = [ # gib hier die Filenamen angeben welche auf Huggingface unter "files and versions" angegeben sind
 
         ".gitattributes",
         "README.md",
@@ -54,7 +54,7 @@ def install_model():
     print(downloaded_model_path) 
     
 # oeffnet das Modell zur erkennung von Wagnis
-# Quelle: HIER DAS HUGGING FACE MODELL ANGEBEN UND GOOGLECOLAB Quelle
+# Quelle: https://huggingface.co/Jaki01/vagueness-detection-large
 def vague_sentence_detection():
     
         # hier wird das Modell zur Erkennung von Wagnis aufgerufen 
@@ -113,26 +113,26 @@ def produce_csv_with_green_or_vague_sentences(report_savefile,result_green,text_
     
     
 def main ():
-    # ANPASSEN: Welche Funktion soll ausgefuehrt werden (1/2/3 Eingeben) -> im Fall von 1.die Funktion def install model(): entsprechend der Beschreibung anpassen
-    Auswahl = 5
+    # WERT ANPASSEN: Welche Funktion soll ausgefuehrt werden (1/2/3 Eingeben) -> im Fall von 1.die Funktion def install model(): entsprechend der Beschreibung anpassen
+    Auswahl = 1
     
     if Auswahl == 1:
         install_model()
         sys.exit()
     if Auswahl == 2: 
         green_sentence_detection()
-    if Auswahl == 3: 
+    if Auswahl == 3: # Hinweis: die Ausführung des Modells kann auf leistungsschwachen Systemen viel Zeit in Anspruch nehmen (15 min oder mehr), was der Komplexität des Modells geschuldet ist.
         vague_sentence_detection()
         
     # hier angeben wo der zu verarbeitende (wagnis erkennen/Umweltaussagen erkennen) Nachhaltigkeitsbericht gespeichert ist (Format = .csv)
-    report_source = r"C:\Users\Jakob\Documents\AA Bachelorarbeit Datein\Nachhaltigkeitsberichte\2.Alle gruenen Saetze\Verizon_Nachhaltigkeitsbericht_2022.csv"    
+    report_source = "FirmaXY_Nachhaltigkeitsbericht_2022.csv"    
     
-    # hier angeben wo die Datei (CSV-Format) gespeicht werden soll, in welcher die Saetze klassifiziert (vage/Umweltaussage)sind
-    report_savefile = r"C:\Users\Jakob\Documents\AA Bachelorarbeit Datein\Nachhaltigkeitsberichte\2.Alle gruenen Saetze\Vage_Verizon_2022.csv"
+    # hier angeben wo die Datei (CSV-Format) gespeichert werden soll, in welcher die Saetze klassifiziert (vage/Umweltaussage) sind
+    report_savefile = "FirmaXY_Vagen_Saetze_Verizon_2022.csv"
     
     text = pd.read_csv(report_source, header=None, delimiter=';',encoding='utf-8')
 
-    # fuellt einen array mit alles Saetzen aus der Csv-Datei
+    # fuellt einen array mit allen Saetzen aus der csv-Datei
     text_array = []
     r = 0
     while r < len(text) and text.iloc[r, 0]:  # Solange text.iloc[r, 0] nicht leer ist
