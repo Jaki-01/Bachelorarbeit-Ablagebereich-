@@ -14,7 +14,7 @@ Created on Mon Dec  20 14:51:27 2023
 # 3. das "vagueness-detection-large" Modell aufrufen (aus .csv) und alle vagen Sätze klassifizieren/abspeichern (als .csv)
 
 ### ### ### ### 
-
+import csv 
 import pandas as pd
 import os 
 import sys
@@ -130,7 +130,7 @@ def main ():
     # hier angeben wo die Datei (CSV-Format) gespeichert werden soll, in welcher die Saetze klassifiziert (vage/Umweltaussage) sind
     report_savefile = "FirmaXY_Vagen_Saetze_Verizon_2022.csv"
     
-    text = pd.read_csv(report_source, header=None, delimiter=';',encoding='utf-8')
+    text = pd.read_csv(report_source, header=None, quoting=csv.QUOTE_NONE, delimiter=';',encoding='utf-8')
 
     # fuellt einen array mit allen Saetzen aus der csv-Datei
     text_array = []
